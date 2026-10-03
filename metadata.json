@@ -1,0 +1,6 @@
+{
+  "name": "Lentera Memori - Dribbble Flashcard",
+  "description": "Aplikasi flashcard interaktif bergaya Google Stitch & Dribbble dengan efek 3D flip, navigasi cerdas, progress bar, dan sistem repetisi berjarak (SRS).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kartu Hafalan Daily Verbs</title>
+<style>
+:root{--bg:#f6f5f1;--fg:#1f1f1c;--mut:#6b6a63;--card:#fff;--bd:#dcdad2;--ac:#2f6fdb;--ok:#2e8b57;--no:#c0502f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17171a;--fg:#ececea;--mut:#9a9a94;--card:#222226;--bd:#3a3a40;--ac:#6ea0ff;--ok:#5cc48a;--no:#ef8a69}}
+:root[data-theme="dark"]{--bg:#17171a;--fg:#ececea;--mut:#9a9a94;--card:#222226;--bd:#3a3a40;--ac:#6ea0ff;--ok:#5cc48a;--no:#ef8a69}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:480px;margin:0 auto;padding:16px}
+h1{font-size:18px;margin:4px 0 12px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+button{font:inherit;border:1px solid var(--bd);background:var(--card);color:var(--fg);border-radius:10px;padding:8px 12px;cursor:pointer}
+button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.stat{color:var(--mut);font-size:14px;margin:6px 0}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:18px;min-height:240px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;cursor:pointer;user-select:none}
+.v{font-size:40px;font-weight:700;word-break:break-word}
+.p{font-size:20px;color:var(--mut);margin-top:8px}
+.a{font-size:28px;font-weight:600}
+.h{font-size:13px;color:var(--mut);margin-top:16px}
+.nav{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px}
+.nav .no{color:var(--no)}.nav .ok{color:var(--ok)}
+</style>
+</head>
+<body>
+<main>
+<h1>Kartu Hafalan Daily Verbs</h1>
+<div class="row" id="sets"></div>
+<div class="row">
+<button id="shuf">Acak</button>
+<button id="unk">Belum hafal saja</button>
+<button id="rst">Reset</button>
+</div>
+<div class="stat" id="stat"></div>
+<div class="card" id="card"></div>
+<div class="nav">
+<button id="prev">← Sebelumnya</button>
+<button id="no" class="no">Belum</button>
+<button id="ok" class="ok">Hafal ✓</button>
+</div>
+<div class="row" style="margin-top:10px"><button id="next" style="flex:1">Berikutnya →</button></div>
+</main>
+<script>
+const RAW={a:`Be|Ada, adalah|/biː/
+Have|Memiliki|/hæv/
+Do|Melakukan|/duː/
+Say|Mengatakan|/seɪ/
+Get|Mendapatkan|/ɡet/
+Make|Membuat|/meɪk/
+Go|Pergi|/ɡoʊ/
+Know|Tahu, mengenal|/noʊ/
+Think|Berpikir|/θɪŋk/
+Take|Mengambil|/teɪk/
+See|Melihat|/siː/
+Come|Datang|/kʌm/
+Want|Ingin|/wɑːnt/
+Look|Melihat, memandang|/lʊk/
+Use|Menggunakan|/juːz/
+Find|Menemukan|/faɪnd/
+Give|Memberi|/ɡɪv/
+Tell|Menceritakan, menyuruh|/tel/
+Work|Bekerja|/wɜːrk/
+Call|Menelepon, memanggil|/kɔːl/
+Try|Mencoba|/traɪ/
+Ask|Bertanya|/æsk/
+Need|Membutuhkan|/niːd/
+Feel|Merasa|/fiːl/
+Become|Menjadi|/bɪˈkʌm/
+Leave|Meninggalkan, berangkat|/liːv/
+Put|Meletakkan|/pʊt/
+Mean|Artinya, bermakna|/miːn/
+Keep|Menyimpan, menjaga|/kiːp/
+Let|Membiarkan, mengizinkan|/let/
+Begin|Memulai|/bɪˈɡɪn/
+Seem|Tampaknya, kelihatan|/siːm/
+Help|Membantu|/help/
+Talk|Berbicara|/tɔːk/
+Turn|Berbelok, memutar|/tɜːrn/
+Start|Memulai|/stɑːrt/
+Show|Menunjukkan|/ʃoʊ/
+Hear|Mendengar|/hɪr/
+Play|Bermain|/pleɪ/
+Run|Berlari|/rʌn/
+Move|Bergerak, pindah|/muːv/
+Like|Menyukai|/laɪk/
+Live|Tinggal, hidup|/lɪv/
+Believe|Percaya|/bɪˈliːv/
+Hold|Memegang|/hoʊld/
+Bring|Membawa|/brɪŋ/
+Happen|Terjadi|/ˈhæp.ən/
+Write|Menulis|/raɪt/
+Provide|Menyediakan|/prəˈvaɪd/
+Sit|Duduk|/sɪt/
+Stand|Berdiri|/stænd/
+Lose|Kehilangan, kalah|/luːz/
+Pay|Membayar|/peɪ/
+Meet|Bertemu|/miːt/
+Include|Termasuk, mencakup|/ɪnˈkluːd/
+Continue|Melanjutkan|/kənˈtɪn.juː/
+Set|Mengatur, menetapkan|/set/
+Learn|Belajar|/lɜːrn/
+Change|Mengubah, ganti|/tʃeɪndʒ/
+Lead|Memimpin|/liːd/
+Understand|Mengerti|/ˌʌn.dɚˈstænd/
+Watch|Menonton, mengawasi|/wɑːtʃ/
+Follow|Mengikuti|/ˈfɑː.loʊ/
+Stop|Berhenti|/stɑːp/
+Create|Menciptakan|/kriˈeɪt/
+Speak|Berbicara|/spiːk/
+Read|Membaca|/riːd/
+Allow|Mengizinkan|/əˈlaʊ/
+Add|Menambahkan|/æd/
+Spend|Menghabiskan (waktu/uang)|/spend/
+Grow|Tumbuh, menanam|/ɡroʊ/
+Open|Membuka|/ˈoʊ.pən/
+Walk|Berjalan|/wɔːk/
+Win|Menang|/wɪn/
+Offer|Menawarkan|/ˈɔː.fɚ/
+Remember|Ingat|/rɪˈmem.bɚ/
+Love|Mencintai, sangat suka|/lʌv/
+Consider|Mempertimbangkan|/kənˈsɪd.ɚ/
+Appear|Muncul, tampak|/əˈpɪr/
+Buy|Membeli|/baɪ/
+Wait|Menunggu|/weɪt/
+Serve|Melayani, menyajikan|/sɜːrv/
+Die|Meninggal|/daɪ/
+Send|Mengirim|/send/
+Expect|Mengharapkan, menduga|/ɪkˈspekt/
+Build|Membangun|/bɪld/
+Stay|Tinggal, menetap|/steɪ/
+Fall|Jatuh|/fɔːl/
+Cut|Memotong|/kʌt/
+Reach|Mencapai|/riːtʃ/
+Kill|Membunuh|/kɪl/
+Raise|Mengangkat, memelihara|/reɪz/
+Pass|Melewati, lulus|/pæs/
+Sell|Menjual|/sel/
+Decide|Memutuskan|/dɪˈsaɪd/
+Return|Kembali, mengembalikan|/rɪˈtɜːrn/
+Explain|Menjelaskan|/ɪkˈspleɪn/
+Hope|Berharap|/hoʊp/
+Develop|Mengembangkan|/dɪˈvel.əp/
+Carry|Membawa|/ˈkær.i/`,
+b:`Announce|Mengumumkan|/əˈnaʊns/
+Appreciate|Menghargai|/əˈpriː.ʃi.eɪt/
+Argue|Berdebat, bertengkar|/ˈɑːrɡ.juː/
+Arise|Muncul, timbul|/əˈraɪz/
+Attack|Menyerang|/əˈtæk/
+Attempt|Mencoba, berusaha|/əˈtempt/
+Avoid|Menghindari|/əˈvɔɪd/
+Awake|Terbangun|/əˈweɪk/
+Bathe|Mandi|/beɪð/
+Battle|Bertempur|/ˈbæt̬.əl/
+Beg|Memohon, mengemis|/beɡ/
+Behave|Berperilaku, bersikap|/bɪˈheɪv/
+Belong|Milik, termasuk|/bɪˈlɔːŋ/
+Bend|Membungkuk, menekuk|/bend/
+Bet|Bertaruh|/bet/
+Bite|Menggigit|/baɪt/
+Blame|Menyalahkan|/bleɪm/
+Block|Menghalangi|/blɑːk/
+Boil|Merebus|/bɔɪl/
+Breathe|Bernapas|/briːð/
+Bury|Mengubur|/ˈber.i/
+Calculate|Menghitung|/ˈkæl.kjə.leɪt/
+Capture|Menangkap|/ˈkæp.tʃɚ/
+Challenge|Menantang|/ˈtʃæl.ɪndʒ/
+Cheat|Mencontek, menipu|/tʃiːt/
+Chew|Mengunyah|/tʃuː/
+Choose|Memilih|/tʃuːz/
+Claim|Mengklaim|/kleɪm/
+Collect|Mengumpulkan|/kəˈlekt/
+Complain|Mengeluh|/kəmˈpleɪn/
+Concern|Mengkhawatirkan|/kənˈsɝːn/
+Connect|Menghubungkan|/kəˈnekt/
+Consume|Mengonsumsi|/kənˈsuːm/
+Contain|Berisi, mengandung|/kənˈteɪn/
+Convince|Meyakinkan|/kənˈvɪns/
+Copy|Menyalin|/ˈkɑː.pi/
+Cough|Batuk|/kɑːf/
+Count|Menghitung|/kaʊnt/
+Cover|Menutupi|/ˈkʌv.ɚ/
+Crawl|Merangkak|/krɑːl/
+Crash|Menabrak|/kræʃ/
+Crawl|Merangkak|/krɑːl/
+Create|Menciptakan|/kriˈeɪt/
+Cross|Menyeberang|/krɑːs/
+Curse|Mengutuk|/kɝːs/
+Damage|Merusak|/ˈdæm.ɪdʒ/
+Dare|Berani|/der/
+Deal|Berurusan|/diːl/
+Debate|Berdebat|/dɪˈbeɪt/
+Decorate|Menghias|/ˈdek.ə.reɪt/
+Delay|Menunda|/dɪˈleɪ/
+Deliver|Mengantarkan|/dɪˈlɪv.ɚ/
+Demand|Menuntut|/dɪˈmænd/
+Deny|Menyangkal|/dɪˈnaɪ/
+Depend|Bergantung|/dɪˈpend/
+Deserve|Pantas, layak|/dɪˈzɝːv/
+Destroy|Menghancurkan|/dɪˈstrɔɪ/
+Disagree|Tidak setuju|/ˌdɪs.əˈɡriː/
+Discover|Menemukan|/dɪˈskʌv.ɚ/
+Discuss|Mendiskusikan|/dɪˈskʌs/
+Disturb|Mengganggu|/dɪˈstɝːb/
+Divide|Membagi|/dɪˈvaɪd/
+Doubt|Meragukan|/daʊt/
+Drag|Menyeret|/dræɡ/
+Drain|Mengeringkan|/dreɪn/
+Escape|Melarikan diri|/ɪˈskeɪp/
+Examine|Memeriksa|/ɪɡˈzæm.ɪn/
+Exchange|Menukar|/ɪksˈtʃeɪndʒ/
+Excuse|Memaafkan|/ɪkˈskjuːz/
+Exist|Ada, eksis|/ɪɡˈzɪst/
+Expand|Memperluas|/ɪkˈspænd/
+Experience|Mengalami|/ɪkˈspɪr.i.əns/
+Fear|Takut|/fɪr/
+Feed|Memberi makan|/fiːd/
+Fight|Berkelahi|/faɪt/
+Flood|Membanjiri|/flʌd/
+Flow|Mengalir|/floʊ/
+Fold|Melipat|/foʊld/
+Greet|Menyapa|/ɡriːt/
+Guard|Menjaga|/ɡɑːrd/
+Guide|Memandu|/ɡaɪd/
+Handle|Menangani|/ˈhæn.dəl/
+Hang|Menggantung|/hæŋ/
+Hunt|Berburu|/hʌnt/
+Hurry|Bergegas|/ˈhɝː.i/
+Identify|Mengidentifikasi|/aɪˈden.t̬ə.faɪ/
+Ignore|Mengabaikan|/ɪɡˈnɔːr/
+Impress|Mengesankan|/ɪmˈpres/
+Injure|Melukai|/ˈɪn.dʒɚ/
+Insist|Bersikeras|/ɪnˈsɪst/
+Instruct|Memerintahkan|/ɪnˈstrʌkt/
+Intend|Berencana, bermaksud|/ɪnˈtend/
+Interview|Mewawancarai|/ˈɪn.t̬ɚ.vjuː/
+Investigate|Menyelidiki|/ɪnˈves.tə.ɡeɪt/
+Joke|Bercanda|/dʒoʊk/
+Judge|Menilai, menghakimi|/dʒʌdʒ/
+Kiss|Mencium|/kɪs/
+Knock|Mengetuk|/nɑːk/
+Land|Mendarat|/lænd/
+Last|Berlangsung, tahan lama|/læst/`,
+c:`Accept|Menerima|/əkˈsept/
+Achieve|Mencapai|/əˈtʃiːv/
+Act|Bertindak, berakting|/ækt/
+Agree|Setuju|/əˈɡriː/
+Apply|Melamar, menerapkan|/əˈplaɪ/
+Arrange|Mengatur|/əˈreɪndʒ/
+Arrive|Tiba|/əˈraɪv/
+Bake|Memanggang|/beɪk/
+Beat|Mengalahkan, memukul|/biːt/
+Blow|Meniup|/bloʊ/
+Borrow|Meminjam|/ˈbɑːr.oʊ/
+Break|Mematahkan, merusak|/breɪk/
+Brush|Menyikat|/brʌʃ/
+Burn|Membakar|/bɜːrn/
+Cancel|Membatalkan|/ˈkæn.səl/
+Catch|Menangkap|/kætʃ/
+Celebrate|Merayakan|/ˈsel.ə.breɪt/
+Clean|Membersihkan|/kliːn/
+Climb|Memanjat|/klaɪm/
+Close|Menutup|/kloʊz/
+Compare|Membandingkan|/kəmˈper/
+Complain|Mengeluh|/kəmˈpleɪn/
+Cook|Memasak|/kʊk/
+Cost|Berharga|/kɔːst/
+Count|Menghitung|/kaʊnt/
+Cry|Menangis|/kraɪ/
+Dance|Menari|/dæns/
+Describe|Mendeskripsikan|/dɪˈskraɪb/
+Design|Mendesain|/dɪˈzaɪn/
+Draw|Menggambar|/drɔː/
+Dream|Bermimpi|/driːm/
+Drink|Minum|/drɪŋk/
+Drive|Mengemudi|/draɪv/
+Earn|Mendapatkan (uang)|/ɜːrn/
+Eat|Makan|/iːt/
+Enjoy|Menikmati|/ɪnˈdʒɔɪ/
+Exercise|Berolahraga|/ˈek.sɚ.saɪz/
+Fill|Mengisi|/fɪl/
+Finish|Menyelesaikan|/ˈfɪn.ɪʃ/
+Fix|Memperbaiki|/fɪks/
+Fly|Terbang|/flaɪ/
+Forget|Lupa|/fɚˈɡet/
+Forgive|Memaafkan|/fɚˈɡɪv/
+Gather|Mengumpulkan|/ˈɡæð.ɚ/
+Guess|Menebak|/ɡes/
+Hang|Menggantung|/hæŋ/
+Hate|Membenci|/heɪt/
+Hide|Bersembunyi|/haɪd/
+Hit|Memukul|/hɪt/
+Hurt|Melukai|/hɜːrt/
+Imagine|Membayangkan|/ɪˈmædʒ.ɪn/
+Improve|Meningkatkan|/ɪmˈpruːv/
+Introduce|Memperkenalkan|/ˌɪn.trəˈduːs/
+Invite|Mengundang|/ɪnˈvaɪt/
+Jump|Melompat|/dʒʌmp/
+Kick|Menendang|/kɪk/
+Laugh|Tertawa|/læf/
+Lay|Meletakkan|/leɪ/
+Lend|Meminjamkan|/lend/
+Lie|Berbohong|/laɪ/
+Lift|Mengangkat|/lɪft/
+Listen|Mendengarkan|/ˈlɪs.ən/
+Lock|Mengunci|/lɑːk/
+Marry|Menikah|/ˈmer.i/
+Measure|Mengukur|/ˈmeʒ.ɚ/
+Mention|Menyebutkan|/ˈmen.ʃən/
+Miss|Merindukan|/mɪs/
+Mix|Mencampur|/mɪks/
+Note|Mencatat|/noʊt/
+Notice|Memperhatikan|/ˈnoʊ.t̬ɪs/
+Obey|Mematuhi|/oʊˈbeɪ/
+Order|Memesan|/ˈɔːr.dɚ/
+Organize|Mengorganisir|/ˈɔːr.ɡə.naɪz/
+Pack|Membungkus|/pæk/
+Paint|Melukis|/peɪnt/
+Plan|Merencanakan|/plæn/
+Plant|Menanam|/plænt/
+Pray|Berdoa|/preɪ/
+Prepare|Mempersiapkan|/prɪˈper/
+Press|Menekan|/pres/
+Pretend|Pura-pura|/prɪˈtend/
+Promise|Berjanji|/ˈprɑː.mɪs/
+Pull|Menarik|/pʊl/
+Push|Mendorong|/pʊʃ/
+Receive|Menerima|/rɪˈsiːv/
+Relax|Bersantai|/rɪˈlæks/
+Rent|Menyewa|/rent/
+Repeat|Mengulang|/rɪˈpiːt/
+Respect|Menghormati|/rɪˈspekt/
+Rest|Beristirahat|/rest/
+Save|Menyimpan|/seɪv/
+Build|Membangun|/bɪld/
+Buy|Membeli|/baɪ/
+Carry|Membawa|/ˈkær.i/
+Explain|Menjelaskan|/ɪkˈspleɪn/
+Hear|Mendengar|/hɪr/
+Keep|Menyimpan|/kiːp/
+Learn|Belajar|/lɜːrn/
+Offer|Menawarkan|/ˈɔː.fɚ/
+Remember|Mengingat|/rɪˈmem.bɚ/`};
+let words=[],seen=new Set();
+for(const k of ['a','c','b'])for(const l of RAW[k].split('\n')){const [v,m,p]=l.split('|');words.push({v,m,p,k,id:k+':'+words.length});}
+const NM={a:'Hal 10-14',c:'Hal 15-19',b:'Hal 20-24'};
+const SETS={all:'Semua ('+words.length+')'};
+for(const k of ['a','c','b'])SETS[k]=NM[k]+' ('+words.filter(w=>w.k===k).length+')';
+let known=new Set();
+try{known=new Set(JSON.parse(localStorage.getItem('dv-known')||'[]'));}catch(e){}
+words.forEach(w=>{if(known.has(w.v))known.add(w.id);});
+const save=()=>{try{localStorage.setItem('dv-known',JSON.stringify([...known]));}catch(e){}};
+let set='all',onlyUnk=false,deck=[],i=0,flip=false;
+const $=id=>document.getElementById(id);
+function build(keepOrder){
+ deck=words.filter(w=>(set==='all'||w.k===set)&&(!onlyUnk||!known.has(w.id)));
+ i=0;flip=false;render();
+}
+function speak(t){try{const u=new SpeechSynthesisUtterance(t);u.lang='en-US';speechSynthesis.cancel();speechSynthesis.speak(u);}catch(e){}}
+function render(){
+ const pool=words.filter(w=>set==='all'||w.k===set);
+ const kn=pool.filter(w=>known.has(w.id)).length;
+ $('stat').textContent=deck.length?`Kartu ${i+1} dari ${deck.length} · Hafal ${kn}/${pool.length}`:`Semua kartu sudah hafal 🎉 (${kn}/${pool.length})`;
+ const c=$('card');
+ if(!deck.length){c.innerHTML='<div class="a">Selesai!</div><div class="h">Tekan Reset atau matikan filter untuk mengulang.</div>';return;}
+ const w=deck[i];
+ c.innerHTML=flip?`<div class="a">${w.m}</div><div class="p">${w.v} ${w.p}</div><div class="h">ketuk untuk membalik</div>`:`<div class="v">${w.v}</div><div class="p">${w.p}</div><div class="h">ketuk untuk melihat arti · <u id="spk">🔊 dengar</u></div>`;
+ const s=$('spk');if(s)s.onclick=e=>{e.stopPropagation();speak(w.v);};
+}
+function go(d){if(!deck.length)return;i=(i+d+deck.length)%deck.length;flip=false;render();}
+$('card').onclick=()=>{if(deck.length){flip=!flip;render();}};
+$('next').onclick=()=>go(1);$('prev').onclick=()=>go(-1);
+$('ok').onclick=()=>{if(!deck.length)return;known.add(deck[i].id);save();if(onlyUnk){deck.splice(i,1);if(i>=deck.length)i=0;flip=false;render();}else go(1);};
+$('no').onclick=()=>{if(!deck.length)return;known.delete(deck[i].id);save();go(1);};
+$('shuf').onclick=()=>{for(let j=deck.length-1;j>0;j--){const r=Math.floor(Math.random()*(j+1));[deck[j],deck[r]]=[deck[r],deck[j]];}i=0;flip=false;render();};
+$('unk').onclick=()=>{onlyUnk=!onlyUnk;$('unk').classList.toggle('on',onlyUnk);build();};
+$('rst').onclick=()=>{known=new Set();save();onlyUnk=false;$('unk').classList.remove('on');build();};
+for(const k in SETS){const b=document.createElement('button');b.textContent=SETS[k];if(k===set)b.className='on';b.onclick=()=>{set=k;[...$('sets').children].forEach(x=>x.classList.remove('on'));b.classList.add('on');build();};$('sets').appendChild(b);}
+build();
+</script>
+</body>
+</html>
+
+const flashcards = [
+      {
+        question: "Pertanyaan Anda di sini",
+        answer: "Jawaban Anda di sini"
+      },
+      // ...
+    ];
