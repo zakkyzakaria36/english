@@ -1,1103 +1,217 @@
 <!DOCTYPE html>
-<html class="dark" lang="id">
+<html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>Kartu Hafalan Daily Verbs - Dribbble Style</title>
-  <meta name="description" content="Aplikasi flashcard interaktif hafalan 300 Daily Verbs kosakata bahasa Inggris bergaya Google Stitch & Dribbble dengan efek 3D flip, pelafalan audio, filter set, dan sistem hafalan." />
-  <meta property="og:title" content="Kartu Hafalan Daily Verbs - Dribbble Style" />
-  <meta property="og:description" content="Aplikasi flashcard interaktif hafalan 300 Daily Verbs kosakata bahasa Inggris bergaya Google Stitch & Dribbble dengan efek 3D flip, pelafalan audio, filter set, dan sistem hafalan." />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
-
-  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-
-  <!-- FontAwesome Icons CDN (v6.5.1) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily Verbs ala ZX</title>
+  
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script id="tailwind-config">
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            "on-surface": "#dae2fd",
-            "surface-slate": "#1e293b",
-            "on-tertiary-fixed-variant": "#005236",
-            "surface-variant": "#2d3449",
-            "error-container": "#93000a",
-            "tertiary-container": "#00885d",
-            "on-tertiary-fixed": "#002113",
-            "on-secondary-fixed-variant": "#004e5c",
-            "error": "#ffb4ab",
-            "secondary-fixed-dim": "#4cd7f6",
-            "on-tertiary": "#003824",
-            "on-primary-fixed-variant": "#2f2ebe",
-            "glow-rose": "#f43f5e",
-            "on-primary-container": "#0d0096",
-            "background": "#0b1326",
-            "primary-fixed": "#e1e0ff",
-            "primary-container": "#8083ff",
-            "tertiary": "#4edea3",
-            "on-primary-fixed": "#07006c",
-            "surface-midnight": "#090d16",
-            "surface-container-highest": "#2d3449",
-            "tertiary-fixed": "#6ffbbe",
-            "primary": "#c0c1ff",
-            "surface-tint": "#c0c1ff",
-            "surface-container-high": "#222a3d",
-            "secondary": "#4cd7f6",
-            "surface-bright": "#31394d",
-            "glow-amber": "#f59e0b",
-            "surface": "#0b1326",
-            "on-error-container": "#ffdad6",
-            "inverse-on-surface": "#283044",
-            "on-background": "#dae2fd",
-            "outline-variant": "#464554",
-            "secondary-container": "#03b5d3",
-            "on-error": "#690005",
-            "on-secondary-container": "#00424e",
-            "secondary-fixed": "#acedff",
-            "surface-dim": "#0b1326",
-            "on-surface-variant": "#c7c4d7",
-            "primary-fixed-dim": "#c0c1ff",
-            "surface-container-lowest": "#060e20",
-            "inverse-surface": "#dae2fd",
-            "on-primary": "#1000a9",
-            "on-secondary-fixed": "#001f26",
-            "outline": "#908fa0",
-            "surface-container-low": "#131b2e",
-            "tertiary-fixed-dim": "#4edea3",
-            "inverse-primary": "#494bd6",
-            "surface-container": "#171f33",
-            "on-secondary": "#003640",
-            "on-tertiary-container": "#000703"
-          },
-          borderRadius: {
-            "DEFAULT": "1rem",
-            "lg": "2rem",
-            "xl": "3rem",
-            "full": "9999px"
-          },
-          spacing: {
-            "space-md": "1rem",
-            "space-xl": "2rem",
-            "margin": "1.25rem",
-            "gutter": "1rem",
-            "gutter-sm": "0.75rem",
-            "space-xs": "0.25rem",
-            "space-lg": "1.5rem",
-            "space-sm": "0.5rem",
-            "margin-tablet": "2rem"
-          },
-          fontFamily: {
-            sans: ["'Plus Jakarta Sans'", "sans-serif"],
-            mono: ["'JetBrains Mono'", "monospace"]
-          }
-        }
-      }
-    };
-  </script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
   <style>
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      overscroll-behavior: none;
-      -webkit-font-smoothing: antialiased;
-    }
-    .pb-safe { padding-bottom: max(env(safe-area-inset-bottom, 0px), 20px); }
-    .pt-safe { padding-top: max(env(safe-area-inset-top, 0px), 10px); }
-    ::-webkit-scrollbar { display: none; }
-    
-    /* 3D Card Flip Animation */
-    .card-scene {
+    /* 1. Efek Perspektif 3D */
+    .perspective {
       perspective: 1200px;
+      -webkit-perspective: 1200px;
     }
-    .card-flipper {
-      transition: transform 0.65s cubic-bezier(0.34, 1.35, 0.64, 1);
+
+    /* 2. Container Dalam Kartu */
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
       transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .card-flipper.flipped {
+
+    /* Rotasi saat kartu diklik */
+    .flipped .card-inner {
       transform: rotateY(180deg);
+      -webkit-transform: rotateY(180deg);
     }
-    .card-face {
+
+    /* 3. Sisi Kartu (Depan & Belakang) */
+    .card-front, .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
+      border-radius: 1.5rem;
     }
-    .card-face-back {
+
+    /* KUNCI: Putar sisi belakang 180deg lebih awal agar teks TIDAK cermin */
+    .card-back {
       transform: rotateY(180deg);
+      -webkit-transform: rotateY(180deg);
     }
   </style>
 </head>
 
-<body class="bg-surface text-on-surface flex flex-col min-h-screen relative overflow-x-hidden selection:bg-primary-container selection:text-white">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between items-center p-4 selection:bg-indigo-500 selection:text-white">
 
-  <!-- Ambient Glow Effects (Dribbble Soft Glow) -->
-  <div class="pointer-events-none fixed -top-28 -left-28 w-96 h-96 rounded-full bg-primary-container/20 blur-[130px]"></div>
-  <div class="pointer-events-none fixed -bottom-28 -right-28 w-96 h-96 rounded-full bg-secondary-container/20 blur-[130px]"></div>
-  <div class="pointer-events-none fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] rounded-full bg-surface-container-high/30 blur-[150px] -z-10"></div>
-
-  <!-- Header -->
-  <header class="fixed top-0 w-full z-50 pt-safe bg-surface-midnight/85 backdrop-blur-xl border-b border-white/[0.05] shadow-[0_1px_12px_rgba(0,0,0,0.3)]">
-    <div class="max-w-md mx-auto h-16 px-margin flex items-center justify-between">
-      <div class="flex items-center gap-2.5">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-primary-container via-primary to-secondary flex items-center justify-center shadow-[0_2px_12px_rgba(128,131,255,0.45)]">
-          <i class="fa-solid fa-book-bookmark text-surface-midnight text-sm"></i>
-        </div>
-        <div class="flex flex-col">
-          <h1 class="font-bold text-[17px] text-on-surface leading-tight tracking-tight">Daily Verbs</h1>
-          <span class="text-[11px] text-on-surface-variant font-medium">300 Kata Kerja Esensial</span>
-        </div>
+  <!-- TOP HEADER -->
+  <header class="w-full max-w-md pt-4 flex flex-col items-center gap-3 text-center">
+    <!-- Title -->
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/30">
+        <i class="fa-solid fa-layer-group text-sm"></i>
       </div>
+      <h1 class="text-xl font-bold tracking-wide bg-gradient-to-r from-indigo-400 via-purple-300 to-pink-400 bg-clip-text text-transparent">
+        Daily Verbs ala ZX
+      </h1>
+    </div>
 
-      <div class="flex items-center gap-2">
-        <div class="px-3 py-1.5 rounded-full bg-surface-slate/80 border border-white/5 text-tertiary text-[12px] font-semibold flex items-center gap-1.5 shadow-inner">
-          <i class="fa-solid fa-fire text-amber-400 text-xs"></i>
-          <span id="streak-counter">14 Hari</span>
-        </div>
-        <div class="px-2.5 py-1.5 rounded-full bg-surface-container border border-white/5 text-primary text-[11px] font-bold flex items-center gap-1">
-          <i class="fa-solid fa-bolt text-amber-400 text-xs"></i>
-          <span id="xp-counter-badge">+40 XP</span>
-        </div>
+    <!-- Progress Bar & Counter -->
+    <div class="w-full bg-slate-900/80 p-3 rounded-2xl border border-slate-800 shadow-inner">
+      <div class="flex justify-between items-center text-xs text-slate-400 mb-2">
+        <span class="font-medium text-slate-300"><i class="fa-regular fa-bookmark mr-1"></i> Progres Belajar</span>
+        <span id="cardCounter" class="font-bold text-indigo-400">1 / 12</span>
+      </div>
+      <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+        <div id="progressBar" class="bg-gradient-to-r from-indigo-500 to-purple-500 h-full w-0 transition-all duration-300"></div>
       </div>
     </div>
   </header>
 
-  <!-- Main Content Stage -->
-  <main class="flex flex-col relative w-full pt-20 pb-8 min-h-screen items-center">
-    <div class="w-full max-w-md flex flex-col relative px-margin pb-safe">
+  <!-- FLASHCARD CONTAINER -->
+  <main class="w-full max-w-sm sm:max-w-md my-auto py-6">
+    <div id="flashcard" class="perspective w-full h-[340px] cursor-pointer" onclick="flipCard()">
+      <div class="card-inner shadow-2xl">
 
-      <!-- Set Filter Tabs (Semua, Hal 10-14, Hal 15-19, Hal 20-24) -->
-      <section class="w-full pt-1 pb-1">
-        <div class="flex items-center gap-1.5 overflow-x-auto pb-1" id="set-tabs-container">
-          <!-- Diisi otomatis oleh JavaScript -->
-        </div>
-      </section>
-
-      <!-- Quick Action Controls (Acak, Belum Hafal Saja, Reset) -->
-      <section class="w-full py-1.5 flex items-center justify-between gap-1.5 text-[12px]">
-        <div class="flex items-center gap-1.5 flex-wrap">
-          <button id="shuf-btn" class="px-3 py-1.5 rounded-full bg-surface-container hover:bg-surface-variant text-on-surface border border-white/5 active:scale-95 transition-all flex items-center gap-1.5 font-semibold text-[11px]" title="Acak urutan kartu">
-            <i class="fa-solid fa-shuffle text-secondary text-xs"></i>
-            <span>Acak</span>
-          </button>
-          <button id="unk-btn" class="px-3 py-1.5 rounded-full bg-surface-container hover:bg-surface-variant text-on-surface border border-white/5 active:scale-95 transition-all flex items-center gap-1.5 font-semibold text-[11px]" title="Hanya tampilkan kartu yang belum dihafal">
-            <i class="fa-regular fa-circle-question text-glow-amber text-xs"></i>
-            <span>Belum Hafal Saja</span>
-          </button>
-        </div>
-        <button id="rst-btn" class="px-2.5 py-1.5 rounded-full bg-surface-container hover:bg-error-container/40 text-on-surface-variant hover:text-error border border-white/5 active:scale-95 transition-all flex items-center gap-1 text-[11px]" title="Reset status hafalan">
-          <i class="fa-solid fa-rotate-left text-xs"></i>
-          <span>Reset</span>
-        </button>
-      </section>
-
-      <!-- Top Session Meta & Progress Bar -->
-      <section class="w-full pt-1 flex flex-col gap-2">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <span id="module-tag" class="px-2.5 py-0.5 rounded-full bg-surface-container-high border border-white/[0.06] text-secondary text-[10px] font-bold uppercase tracking-wider">
-              SET A
+        <!-- SISI DEPAN (Pertanyaan) -->
+        <div class="card-front bg-slate-900/90 border border-slate-800/80 backdrop-blur-xl flex flex-col justify-between items-center p-6 text-center rounded-3xl shadow-indigo-500/10 hover:border-indigo-500/40 transition-colors">
+          <div class="w-full flex justify-between items-center">
+            <span class="text-[10px] font-semibold tracking-wider uppercase bg-indigo-500/10 text-indigo-400 px-3 py-1 rounded-full border border-indigo-500/20">
+              English Verb
             </span>
-            <span id="stat-hafal" class="text-[12px] text-tertiary font-semibold flex items-center gap-1">
-              <i class="fa-solid fa-circle-check text-xs"></i>
-              <span>Hafal 0/100</span>
+            <i class="fa-solid fa-volume-high text-slate-500 hover:text-indigo-400 text-sm transition-colors" title="Audio"></i>
+          </div>
+
+          <div class="my-auto">
+            <p id="cardQuestion" class="text-4xl font-extrabold tracking-tight text-white mb-2">
+              Accept
+            </p>
+            <p class="text-xs text-slate-500 font-medium">Bentuk Kata Kerja Dasar (V1)</p>
+          </div>
+
+          <div class="text-xs text-slate-400 flex items-center gap-1.5 animate-pulse">
+            <i class="fa-solid fa-arrows-rotate text-[10px]"></i>
+            <span>Ketuk kartu untuk lihat arti</span>
+          </div>
+        </div>
+
+        <!-- SISI BELAKANG (Jawaban) -->
+        <div class="card-back bg-gradient-to-br from-indigo-950/80 via-slate-900 to-purple-950/80 border border-indigo-500/30 backdrop-blur-xl flex flex-col justify-between items-center p-6 text-center rounded-3xl shadow-indigo-500/20">
+          <div class="w-full flex justify-between items-center">
+            <span class="text-[10px] font-semibold tracking-wider uppercase bg-purple-500/10 text-purple-300 px-3 py-1 rounded-full border border-purple-500/20">
+              Terjemahan & V2/V3
             </span>
+            <i class="fa-solid fa-check text-emerald-400 text-sm"></i>
           </div>
-          <!-- Counter Badge -->
-          <div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container border border-white/5 text-primary text-[12px] font-semibold shadow-sm">
-            <i class="fa-regular fa-clone text-[11px]"></i>
-            <span id="card-counter-label">1 dari 100</span>
+
+          <div class="my-auto">
+            <p id="cardAnswer" class="text-xl font-bold text-slate-100 leading-relaxed whitespace-pre-line">
+              Menerima
+              <span class="block text-sm font-normal text-indigo-300 mt-2">(V2: Accepted | V3: Accepted)</span>
+            </p>
           </div>
-        </div>
 
-        <!-- Dynamic Progress Track with Gradient Fill -->
-        <div class="w-full h-2 bg-surface-container-high/80 rounded-full overflow-hidden relative p-[1px] border border-white/[0.03]">
-          <div id="progress-bar-fill" class="h-full rounded-full bg-gradient-to-r from-primary via-secondary to-tertiary transition-all duration-500 ease-out shadow-[0_0_12px_rgba(76,215,246,0.5)]" style="width: 1%;"></div>
-        </div>
-      </section>
-
-      <!-- Interactive 3D Card Stage with Dribbble Physical Stack Underlays -->
-      <div class="w-full my-space-md flex flex-col items-center">
-        <div class="relative w-full aspect-[4/5] max-w-[390px] select-none card-scene">
-          
-          <!-- Ambient Stacked Underlay Card 2 (Bottom) -->
-          <div class="absolute inset-0 bg-surface-container-lowest/80 rounded-lg transform scale-[0.88] translate-y-6 -rotate-2 pointer-events-none shadow-lg opacity-40 border border-white/[0.02]"></div>
-          
-          <!-- Ambient Stacked Underlay Card 1 (Middle) -->
-          <div class="absolute inset-0 bg-surface-container-low/90 rounded-lg transform scale-[0.94] translate-y-3 rotate-1 pointer-events-none shadow-xl opacity-75 border border-white/[0.04]"></div>
-
-          <!-- Main Interactive 3D Flippable Container -->
-          <div class="card-flipper relative w-full h-full cursor-pointer" id="flashcard-flipper" role="button" tabindex="0" aria-label="Flashcard. Klik atau tekan Spasi untuk membalik kartu.">
-            
-            <!-- CARD FRONT (Kata Kerja Bahasa Inggris & Fonetik) -->
-            <div class="card-face absolute inset-0 w-full h-full rounded-lg bg-surface-container-high/90 backdrop-blur-2xl p-space-lg flex flex-col justify-between shadow-[0_20px_45px_-12px_rgba(0,0,0,0.7)] border border-white/[0.08]">
-              
-              <!-- Card Top Bar: Chips -->
-              <div class="flex items-center justify-between gap-space-xs">
-                <div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container border border-white/5 text-secondary text-[11px] font-semibold truncate">
-                  <i class="fa-solid fa-layer-group text-[11px]"></i>
-                  <span id="card-front-set-name" class="truncate">Hal 10-14</span>
-                </div>
-                <div id="card-status-badge" class="px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-on-surface-variant text-[10px] font-bold uppercase tracking-wider flex items-center gap-1">
-                  <span>Belum Hafal</span>
-                </div>
-              </div>
-
-              <!-- Card Center: English Verb & Phonetics -->
-              <div class="flex flex-col items-center text-center my-auto px-space-xs py-space-sm">
-                <span class="text-[11px] font-bold text-secondary uppercase tracking-widest mb-2">
-                  DAILY VERB · KOSAKATA
-                </span>
-                
-                <!-- Verb Word -->
-                <h2 id="card-front-verb" class="text-[44px] font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-primary to-secondary leading-tight tracking-tight drop-shadow-md">
-                  Be
-                </h2>
-
-                <!-- Phonetic Notation -->
-                <div class="mt-2 px-3 py-1 rounded-full bg-surface-container/80 border border-white/5 text-secondary font-mono text-[16px] tracking-wider flex items-center gap-2">
-                  <i class="fa-solid fa-volume-high text-xs text-secondary/70"></i>
-                  <span id="card-front-phonetic">/biː/</span>
-                </div>
-
-                <!-- Clue / Flip Prompt -->
-                <div class="mt-5 p-3 rounded-DEFAULT bg-surface-container/70 border border-white/5 flex items-center justify-center gap-2 text-center w-full shadow-inner">
-                  <i class="fa-regular fa-eye text-glow-amber text-xs"></i>
-                  <p class="text-[12px] text-on-surface-variant">
-                    Ketuk kartu untuk melihat arti dalam Bahasa Indonesia
-                  </p>
-                </div>
-              </div>
-
-              <!-- Card Front Footer -->
-              <div class="flex items-center justify-between pt-space-xs">
-                <button id="card-audio-pill" class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface-container-highest border border-white/5 text-on-surface hover:bg-surface-slate active:scale-95 transition-all text-left" type="button" title="Dengar pelafalan asli (English)">
-                  <i class="fa-solid fa-volume-high text-primary text-xs"></i>
-                  <span class="text-[11px] font-semibold text-on-surface-variant">Dengar Pronunciation</span>
-                </button>
-                <div class="flex items-center gap-1.5 text-on-surface-variant text-[11px] font-semibold animate-pulse">
-                  <span>Balik</span>
-                  <i class="fa-solid fa-rotate text-xs"></i>
-                </div>
-              </div>
-
-            </div>
-
-            <!-- CARD BACK (Arti Bahasa Indonesia & Rincian) -->
-            <div class="card-face card-face-back absolute inset-0 w-full h-full rounded-lg bg-surface-container-high/95 backdrop-blur-2xl p-space-lg flex flex-col justify-between shadow-[0_20px_45px_-12px_rgba(0,0,0,0.7)] border border-primary/20">
-              
-              <!-- Back Header -->
-              <div class="flex items-center justify-between">
-                <span class="px-3 py-1 rounded-full bg-tertiary-container/30 border border-tertiary/20 text-tertiary text-[11px] font-bold flex items-center gap-1.5">
-                  <i class="fa-solid fa-circle-check text-xs"></i>
-                  <span>Arti Kosakata</span>
-                </span>
-                <span id="card-back-set-name" class="text-[11px] text-on-surface-variant font-medium">Daily Verbs</span>
-              </div>
-
-              <!-- Answer Content Structure -->
-              <div class="flex flex-col items-center justify-center my-auto text-center py-space-xs">
-                
-                <span class="text-[12px] font-bold text-tertiary uppercase tracking-widest mb-1">
-                  TERJEMAHAN INDONESIA
-                </span>
-                
-                <h3 id="card-back-meaning" class="text-[28px] font-bold text-on-surface leading-snug tracking-tight mb-4">
-                  Ada, adalah
-                </h3>
-
-                <!-- Word & Phonetic Recall Pill -->
-                <div class="p-3.5 rounded-DEFAULT bg-surface-container/80 border border-white/5 flex flex-col items-center gap-1 w-full">
-                  <div class="flex items-center gap-2">
-                    <span id="card-back-verb-echo" class="text-[18px] font-bold text-primary">Be</span>
-                    <span id="card-back-phonetic-echo" class="text-[14px] text-secondary font-mono">/biː/</span>
-                  </div>
-                  <span class="text-[11px] text-on-surface-variant">Klik speaker untuk dengar pelafalan native</span>
-                </div>
-              </div>
-
-              <!-- Back Footer -->
-              <div class="flex items-center justify-between pt-space-xs">
-                <span class="text-[11px] text-on-surface-variant">Sudah hafal kata ini?</span>
-                <div class="flex items-center gap-1.5 text-secondary text-[11px] font-bold hover:underline cursor-pointer" id="back-flip-btn">
-                  <i class="fa-solid fa-rotate text-xs"></i>
-                  <span>Balik ke Depan</span>
-                </div>
-              </div>
-
-            </div>
-
+          <div class="text-xs text-slate-400 flex items-center gap-1.5">
+            <i class="fa-solid fa-arrows-rotate text-[10px]"></i>
+            <span>Ketuk untuk kembali ke pertanyaan</span>
           </div>
         </div>
+
       </div>
-
-      <!-- Spaced Repetition Hafalan Action Dock (Belum vs Hafal ✓) -->
-      <section class="w-full mb-space-sm flex flex-col gap-2">
-        <div class="flex items-center justify-between px-1">
-          <span class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wider">Tandai Status Hafalan</span>
-          <span class="text-[11px] font-semibold text-secondary flex items-center gap-1">
-            <i class="fa-solid fa-brain text-[10px]"></i> Tersimpan Otomatis
-          </span>
-        </div>
-        
-        <div class="grid grid-cols-2 gap-2.5 w-full">
-          <!-- Tombol: Belum Hafal -->
-          <button id="mark-no-btn" class="flex items-center justify-center gap-2 py-3 px-3 rounded-DEFAULT bg-surface-container hover:bg-error-container/40 text-glow-rose border border-glow-rose/20 active:scale-95 transition-all shadow-md">
-            <i class="fa-solid fa-xmark text-sm"></i>
-            <span class="text-[13px] font-bold">Belum Hafal</span>
-          </button>
-          
-          <!-- Tombol: Sudah Hafal ✓ -->
-          <button id="mark-ok-btn" class="flex items-center justify-center gap-2 py-3 px-3 rounded-DEFAULT bg-surface-container hover:bg-tertiary-container/40 text-tertiary border border-tertiary/25 active:scale-95 transition-all shadow-md">
-            <i class="fa-solid fa-check text-sm font-bold"></i>
-            <span class="text-[13px] font-bold">Sudah Hafal ✓</span>
-          </button>
-        </div>
-      </section>
-
-      <!-- Sticky Floating Dock: Navigation Controls -->
-      <div class="w-full mt-1 mb-3">
-        <div class="w-full h-16 rounded-full bg-surface-container/90 backdrop-blur-xl border border-white/[0.08] px-4 flex items-center justify-between shadow-2xl">
-          <!-- Tombol Sebelum (Previous) -->
-          <button id="nav-prev-btn" class="flex items-center gap-2 text-on-surface-variant hover:text-on-surface px-3 py-2 rounded-full hover:bg-surface-variant/40 active:scale-90 transition-all font-semibold text-[13px]" title="Kartu Sebelumnya (Panah Kiri)">
-            <i class="fa-solid fa-arrow-left text-sm"></i>
-            <span class="hidden sm:inline">Sebelum</span>
-          </button>
-
-          <!-- Tombol Utama: Balik Kartu (Prominent Center Flip) -->
-          <button id="nav-flip-btn" class="flex items-center gap-2.5 px-6 py-2.5 rounded-full bg-gradient-to-r from-primary-container via-primary to-secondary text-surface-midnight font-bold text-[14px] shadow-[0_4px_22px_rgba(128,131,255,0.45)] hover:shadow-[0_6px_28px_rgba(128,131,255,0.6)] active:scale-95 transition-all" title="Balik Kartu (Spasi)">
-            <i class="fa-solid fa-arrows-rotate text-base"></i>
-            <span>Balik Kartu</span>
-          </button>
-
-          <!-- Tombol Lanjut (Next) -->
-          <button id="nav-next-btn" class="flex items-center gap-2 text-secondary hover:text-white px-3 py-2 rounded-full hover:bg-surface-variant/40 active:scale-90 transition-all font-semibold text-[13px]" title="Kartu Selanjutnya (Panah Kanan)">
-            <span class="hidden sm:inline">Lanjut</span>
-            <i class="fa-solid fa-arrow-right text-sm"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Toast Feedback Popup -->
-      <div id="toast-feedback" class="opacity-0 pointer-events-none transform -translate-y-2 transition-all duration-300 fixed bottom-28 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-full bg-surface-midnight/95 border border-primary/30 text-on-surface shadow-2xl text-[12px] font-semibold flex items-center gap-2 backdrop-blur-md">
-        <i class="fa-solid fa-circle-check text-tertiary"></i>
-        <span id="toast-text">Tersimpan</span>
-      </div>
-
-      <!-- Deck Overview Quick Peek Micro Card -->
-      <section class="w-full">
-        <div class="w-full rounded-lg bg-surface-container-low border border-white/[0.05] p-3.5 flex items-center justify-between shadow-lg">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-secondary-container/20 border border-secondary/30 flex items-center justify-center text-secondary">
-              <i class="fa-solid fa-spell-check text-base"></i>
-            </div>
-            <div class="flex flex-col">
-              <span class="text-[13px] font-bold text-on-surface" id="deck-summary-title">Total 300 Kata Kerja Harian</span>
-              <span id="deck-summary-desc" class="text-[11px] text-on-surface-variant">Latih hafalan dan dengarkan pengucapannya setiap hari</span>
-            </div>
-          </div>
-          <div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container border border-white/5 text-[11px] font-bold text-tertiary">
-            <i class="fa-solid fa-graduation-cap text-secondary text-xs"></i>
-            <span id="total-mastery-percent">0%</span>
-          </div>
-        </div>
-      </section>
-
     </div>
   </main>
 
-  <!-- Flashcard Interactive Logic -->
+  <!-- BOTTOM NAVIGATION CONTROLS -->
+  <footer class="w-full max-w-xs sm:max-w-sm pb-6">
+    <div class="bg-slate-900/90 border border-slate-800 backdrop-blur-md p-2 rounded-full flex justify-between items-center shadow-xl">
+      <!-- Tombol Sebelum -->
+      <button onclick="prevCard()" class="w-12 h-12 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 flex items-center justify-center transition-all active:scale-95">
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
+
+      <!-- Tombol Putar (Flip) -->
+      <button onclick="flipCard()" class="px-6 py-3 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-medium text-xs tracking-wider uppercase shadow-lg shadow-indigo-500/25 flex items-center gap-2 active:scale-95 transition-all">
+        <i class="fa-solid fa-rotate"></i>
+        <span>Balik</span>
+      </button>
+
+      <!-- Tombol Selanjutnya -->
+      <button onclick="nextCard()" class="w-12 h-12 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 flex items-center justify-center transition-all active:scale-95">
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT LOGIC -->
   <script>
-    // ==========================================
-    // 1. DATA SOAL: 300 Daily Verbs (RAW A, B, C)
-    // ==========================================
-    const RAW = {
-      a: `Be|Ada, adalah|/biː/
-Have|Memiliki|/hæv/
-Do|Melakukan|/duː/
-Say|Mengatakan|/seɪ/
-Get|Mendapatkan|/ɡet/
-Make|Membuat|/meɪk/
-Go|Pergi|/ɡoʊ/
-Know|Tahu, mengenal|/noʊ/
-Think|Berpikir|/θɪŋk/
-Take|Mengambil|/teɪk/
-See|Melihat|/siː/
-Come|Datang|/kʌm/
-Want|Ingin|/wɑːnt/
-Look|Melihat, memandang|/lʊk/
-Use|Menggunakan|/juːz/
-Find|Menemukan|/faɪnd/
-Give|Memberi|/ɡɪv/
-Tell|Menceritakan, menyuruh|/tel/
-Work|Bekerja|/wɜːrk/
-Call|Menelepon, memanggil|/kɔːl/
-Try|Mencoba|/traɪ/
-Ask|Bertanya|/æsk/
-Need|Membutuhkan|/niːd/
-Feel|Merasa|/fiːl/
-Become|Menjadi|/bɪˈkʌm/
-Leave|Meninggalkan, berangkat|/liːv/
-Put|Meletakkan|/pʊt/
-Mean|Artinya, bermakna|/miːn/
-Keep|Menyimpan, menjaga|/kiːp/
-Let|Membiarkan, mengizinkan|/let/
-Begin|Memulai|/bɪˈɡɪn/
-Seem|Tampaknya, kelihatan|/siːm/
-Help|Membantu|/help/
-Talk|Berbicara|/tɔːk/
-Turn|Berbelok, memutar|/tɜːrn/
-Start|Memulai|/stɑːrt/
-Show|Menunjukkan|/ʃoʊ/
-Hear|Mendengar|/hɪr/
-Play|Bermain|/pleɪ/
-Run|Berlari|/rʌn/
-Move|Bergerak, pindah|/muːv/
-Like|Menyukai|/laɪk/
-Live|Tinggal, hidup|/lɪv/
-Believe|Percaya|/bɪˈliːv/
-Hold|Memegang|/hoʊld/
-Bring|Membawa|/brɪŋ/
-Happen|Terjadi|/ˈhæp.ən/
-Write|Menulis|/raɪt/
-Provide|Menyediakan|/prəˈvaɪd/
-Sit|Duduk|/sɪt/
-Stand|Berdiri|/stænd/
-Lose|Kehilangan, kalah|/luːz/
-Pay|Membayar|/peɪ/
-Meet|Bertemu|/miːt/
-Include|Termasuk, mencakup|/ɪnˈkluːd/
-Continue|Melanjutkan|/kənˈtɪn.juː/
-Set|Mengatur, menetapkan|/set/
-Learn|Belajar|/lɜːrn/
-Change|Mengubah, ganti|/tʃeɪndʒ/
-Lead|Memimpin|/liːd/
-Understand|Mengerti|/ˌʌn.dɚˈstænd/
-Watch|Menonton, mengawasi|/wɑːtʃ/
-Follow|Mengikuti|/ˈfɑː.loʊ/
-Stop|Berhenti|/stɑːp/
-Create|Menciptakan|/kriˈeɪt/
-Speak|Berbicara|/spiːk/
-Read|Membaca|/riːd/
-Allow|Mengizinkan|/əˈlaʊ/
-Add|Menambahkan|/æd/
-Spend|Menghabiskan (waktu/uang)|/spend/
-Grow|Tumbuh, menanam|/ɡroʊ/
-Open|Membuka|/ˈoʊ.pən/
-Walk|Berjalan|/wɔːk/
-Win|Menang|/wɪn/
-Offer|Menawarkan|/ˈɔː.fɚ/
-Remember|Ingat|/rɪˈmem.bɚ/
-Love|Mencintai, sangat suka|/lʌv/
-Consider|Mempertimbangkan|/kənˈsɪd.ɚ/
-Appear|Muncul, tampak|/əˈpɪr/
-Buy|Membeli|/baɪ/
-Wait|Menunggu|/weɪt/
-Serve|Melayani, menyajikan|/sɜːrv/
-Die|Meninggal|/daɪ/
-Send|Mengirim|/send/
-Expect|Mengharapkan, menduga|/ɪkˈspekt/
-Build|Membangun|/bɪld/
-Stay|Tinggal, menetap|/steɪ/
-Fall|Jatuh|/fɔːl/
-Cut|Memotong|/kʌt/
-Reach|Mencapai|/riːtʃ/
-Kill|Membunuh|/kɪl/
-Raise|Mengangkat, memelihara|/reɪz/
-Pass|Melewati, lulus|/pæs/
-Sell|Menjual|/sel/
-Decide|Memutuskan|/dɪˈsaɪd/
-Return|Kembali, mengembalikan|/rɪˈtɜːrn/
-Explain|Menjelaskan|/ɪkˈspleɪn/
-Hope|Berharap|/hoʊp/
-Develop|Mengembangkan|/dɪˈvel.əp/
-Carry|Membawa|/ˈkær.i/`,
-      b: `Announce|Mengumumkan|/əˈnaʊns/
-Appreciate|Menghargai|/əˈpriː.ʃi.eɪt/
-Argue|Berdebat, bertengkar|/ˈɑːrɡ.juː/
-Arise|Muncul, timbul|/əˈraɪz/
-Attack|Menyerang|/əˈtæk/
-Attempt|Mencoba, berusaha|/əˈtempt/
-Avoid|Menghindari|/əˈvɔɪd/
-Awake|Terbangun|/əˈweɪk/
-Bathe|Mandi|/beɪð/
-Battle|Bertempur|/ˈbæt̬.əl/
-Beg|Memohon, mengemis|/beɡ/
-Behave|Berperilaku, bersikap|/bɪˈheɪv/
-Belong|Milik, termasuk|/bɪˈlɔːŋ/
-Bend|Membungkuk, menekuk|/bend/
-Bet|Bertaruh|/bet/
-Bite|Menggigit|/baɪt/
-Blame|Menyalahkan|/bleɪm/
-Block|Menghalangi|/blɑːk/
-Boil|Merebus|/bɔɪl/
-Breathe|Bernapas|/briːð/
-Bury|Mengubur|/ˈber.i/
-Calculate|Menghitung|/ˈkæl.kjə.leɪt/
-Capture|Menangkap|/ˈkæp.tʃɚ/
-Challenge|Menantang|/ˈtʃæl.ɪndʒ/
-Cheat|Mencontek, menipu|/tʃiːt/
-Chew|Mengunyah|/tʃuː/
-Choose|Memilih|/tʃuːz/
-Claim|Mengklaim|/kleɪm/
-Collect|Mengumpulkan|/kəˈlekt/
-Complain|Mengeluh|/kəmˈpleɪn/
-Concern|Mengkhawatirkan|/kənˈsɝːn/
-Connect|Menghubungkan|/kəˈnekt/
-Consume|Mengonsumsi|/kənˈsuːm/
-Contain|Berisi, mengandung|/kənˈteɪn/
-Convince|Meyakinkan|/kənˈvɪns/
-Copy|Menyalin|/ˈkɑː.pi/
-Cough|Batuk|/kɑːf/
-Count|Menghitung|/kaʊnt/
-Cover|Menutupi|/ˈkʌv.ɚ/
-Crawl|Merangkak|/krɑːl/
-Crash|Menabrak|/kræʃ/
-Cross|Menyeberang|/krɑːs/
-Curse|Mengutuk|/kɝːs/
-Damage|Merusak|/ˈdæm.ɪdʒ/
-Dare|Berani|/der/
-Deal|Berurusan|/diːl/
-Debate|Berdebat|/dɪˈbeɪt/
-Decorate|Menghias|/ˈdek.ə.reɪt/
-Delay|Menunda|/dɪˈleɪ/
-Deliver|Mengantarkan|/dɪˈlɪv.ɚ/
-Demand|Menuntut|/dɪˈmænd/
-Deny|Menyangkal|/dɪˈnaɪ/
-Depend|Bergantung|/dɪˈpend/
-Deserve|Pantas, layak|/dɪˈzɝːv/
-Destroy|Menghancurkan|/dɪˈstrɔɪ/
-Disagree|Tidak setuju|/ˌdɪs.əˈɡriː/
-Discover|Menemukan|/dɪˈskʌv.ɚ/
-Discuss|Mendiskusikan|/dɪˈskʌs/
-Disturb|Mengganggu|/dɪˈstɝːb/
-Divide|Membagi|/dɪˈvaɪd/
-Doubt|Meragukan|/daʊt/
-Drag|Menyeret|/dræɡ/
-Drain|Mengeringkan|/dreɪn/
-Escape|Melarikan diri|/ɪˈskeɪp/
-Examine|Memeriksa|/ɪɡˈzæm.ɪn/
-Exchange|Menukar|/ɪksˈtʃeɪndʒ/
-Excuse|Memaafkan|/ɪkˈskjuːz/
-Exist|Ada, eksis|/ɪɡˈzɪst/
-Expand|Memperluas|/ɪkˈspænd/
-Experience|Mengalami|/ɪkˈspɪr.i.əns/
-Fear|Takut|/fɪr/
-Feed|Memberi makan|/fiːd/
-Fight|Berkelahi|/faɪt/
-Flood|Membanjiri|/flʌd/
-Flow|Mengalir|/floʊ/
-Fold|Melipat|/foʊld/
-Greet|Menyapa|/ɡriːt/
-Guard|Menjaga|/ɡɑːrd/
-Guide|Memandu|/ɡaɪd/
-Handle|Menangani|/ˈhæn.dəl/
-Hang|Menggantung|/hæŋ/
-Hunt|Berburu|/hʌnt/
-Hurry|Bergegas|/ˈhɝː.i/
-Identify|Mengidentifikasi|/aɪˈden.t̬ə.faɪ/
-Ignore|Mengabaikan|/ɪɡˈnɔːr/
-Impress|Mengesankan|/ɪmˈpres/
-Injure|Melukai|/ˈɪn.dʒɚ/
-Insist|Bersikeras|/ɪnˈsɪst/
-Instruct|Memerintahkan|/ɪnˈstrʌkt/
-Intend|Berencana, bermaksud|/ɪnˈtend/
-Interview|Mewawancarai|/ˈɪn.t̬ɚ.vjuː/
-Investigate|Menyelidiki|/ɪnˈves.tə.ɡeɪt/
-Joke|Bercanda|/dʒoʊk/
-Judge|Menilai, menghakimi|/dʒʌdʒ/
-Kiss|Mencium|/kɪs/
-Knock|Mengetuk|/nɑːk/
-Land|Mendarat|/lænd/
-Last|Berlangsung, tahan lama|/læst/`,
-      c: `Accept|Menerima|/əkˈsept/
-Achieve|Mencapai|/əˈtʃiːv/
-Act|Bertindak, berakting|/ækt/
-Agree|Setuju|/əˈɡriː/
-Apply|Melamar, menerapkan|/əˈplaɪ/
-Arrange|Mengatur|/əˈreɪndʒ/
-Arrive|Tiba|/əˈraɪv/
-Bake|Memanggang|/beɪk/
-Beat|Mengalahkan, memukul|/biːt/
-Blow|Meniup|/bloʊ/
-Borrow|Meminjam|/ˈbɑːr.oʊ/
-Break|Mematahkan, merusak|/breɪk/
-Brush|Menyikat|/brʌʃ/
-Burn|Membakar|/bɜːrn/
-Cancel|Membatalkan|/ˈkæn.səl/
-Catch|Menangkap|/kætʃ/
-Celebrate|Merayakan|/ˈsel.ə.breɪt/
-Clean|Membersihkan|/kliːn/
-Climb|Memanjat|/klaɪm/
-Close|Menutup|/kloʊz/
-Compare|Membandingkan|/kəmˈper/
-Complain|Mengeluh|/kəmˈpleɪn/
-Cook|Memasak|/kʊk/
-Cost|Berharga|/kɔːst/
-Count|Menghitung|/kaʊnt/
-Cry|Menangis|/kraɪ/
-Dance|Menari|/dæns/
-Describe|Mendeskripsikan|/dɪˈskraɪb/
-Design|Mendesain|/dɪˈzaɪn/
-Draw|Menggambar|/drɔː/
-Dream|Bermimpi|/driːm/
-Drink|Minum|/drɪŋk/
-Drive|Mengemudi|/draɪv/
-Earn|Mendapatkan (uang)|/ɜːrn/
-Eat|Makan|/iːt/
-Enjoy|Menikmati|/ɪnˈdʒɔɪ/
-Exercise|Berolahraga|/ˈek.sɚ.saɪz/
-Fill|Mengisi|/fɪl/
-Finish|Menyelesaikan|/ˈfɪn.ɪʃ/
-Fix|Memperbaiki|/fɪks/
-Fly|Terbang|/flaɪ/
-Forget|Lupa|/fɚˈɡet/
-Forgive|Memaafkan|/fɚˈɡɪv/
-Gather|Mengumpulkan|/ˈɡæð.ɚ/
-Guess|Menebak|/ɡes/
-Hang|Menggantung|/hæŋ/
-Hate|Membenci|/heɪt/
-Hide|Bersembunyi|/haɪd/
-Hit|Memukul|/hɪt/
-Hurt|Melukai|/hɜːrt/
-Imagine|Membayangkan|/ɪˈmædʒ.ɪn/
-Improve|Meningkatkan|/ɪmˈpruːv/
-Introduce|Memperkenalkan|/ˌɪn.trəˈduːs/
-Invite|Mengundang|/ɪnˈvaɪt/
-Jump|Melompat|/dʒʌmp/
-Kick|Menendang|/kɪk/
-Laugh|Tertawa|/læf/
-Lay|Meletakkan|/leɪ/
-Lend|Meminjamkan|/lend/
-Lie|Berbohong|/laɪ/
-Lift|Mengangkat|/lɪft/
-Listen|Mendengarkan|/ˈlɪs.ən/
-Lock|Mengunci|/lɑːk/
-Marry|Menikah|/ˈmer.i/
-Measure|Mengukur|/ˈmeʒ.ɚ/
-Mention|Menyebutkan|/ˈmen.ʃən/
-Miss|Merindukan|/mɪs/
-Mix|Mencampur|/mɪks/
-Note|Mencatat|/noʊt/
-Notice|Memperhatikan|/ˈnoʊ.t̬ɪs/
-Obey|Mematuhi|/oʊˈbeɪ/
-Order|Memesan|/ˈɔːr.dɚ/
-Organize|Mengorganisir|/ˈɔːr.ɡə.naɪz/
-Pack|Membungkus|/pæk/
-Paint|Melukis|/peɪnt/
-Plan|Merencanakan|/plæn/
-Plant|Menanam|/plænt/
-Pray|Berdoa|/preɪ/
-Prepare|Mempersiapkan|/prɪˈper/
-Press|Menekan|/pres/
-Pretend|Pura-pura|/prɪˈtend/
-Promise|Berjanji|/ˈprɑː.mɪs/
-Pull|Menarik|/pʊl/
-Push|Mendorong|/pʊʃ/
-Receive|Menerima|/rɪˈsiːv/
-Relax|Bersantai|/rɪˈlæks/
-Rent|Menyewa|/rent/
-Repeat|Mengulang|/rɪˈpiːt/
-Respect|Menghormati|/rɪˈspekt/
-Rest|Beristirahat|/rest/
-Save|Menyimpan|/seɪv/
-Build|Membangun|/bɪld/
-Buy|Membeli|/baɪ/
-Carry|Membawa|/ˈkær.i/
-Explain|Menjelaskan|/ɪkˈspleɪn/
-Hear|Mendengar|/hɪr/
-Keep|Menyimpan|/kiːp/
-Learn|Belajar|/lɜːrn/
-Offer|Menawarkan|/ˈɔː.fɚ/
-Remember|Mengingat|/rɪˈmem.bɚ/`
-    };
+    // Data Flashcard Kosakata Daily Verbs
+    const flashcards = [
+      { question: "Accept", answer: "Menerima\n(V2: Accepted | V3: Accepted)" },
+      { question: "Achieve", answer: "Mencapai / Meraih\n(V2: Achieved | V3: Achieved)" },
+      { question: "Allow", answer: "Mengizinkan\n(V2: Allowed | V3: Allowed)" },
+      { question: "Apologize", answer: "Meminta Maaf\n(V2: Apologized | V3: Apologized)" },
+      { question: "Appreciate", answer: "Menghargai\n(V2: Appreciated | V3: Appreciated)" },
+      { question: "Avoid", answer: "Menghindari\n(V2: Avoided | V3: Avoided)" },
+      { question: "Borrow", answer: "Meminjam\n(V2: Borrowed | V3: Borrowed)" },
+      { question: "Choose", answer: "Memilih\n(V2: Chose | V3: Chosen)" },
+      { question: "Decide", answer: "Memutuskan\n(V2: Decided | V3: Decided)" },
+      { question: "Encourage", answer: "Mendorong / Memberi Semangat\n(V2: Encouraged | V3: Encouraged)" },
+      { question: "Improve", answer: "Meningkatkan / Memperbaiki\n(V2: Improved | V3: Improved)" },
+      { question: "Understand", answer: "Memahami\n(V2: Understood | V3: Understood)" }
+    ];
 
-    // Parsing data ke struktur array
-    let words = [];
-    const NM = { a: 'Hal 10-14', c: 'Hal 15-19', b: 'Hal 20-24' };
-    const SET_TAGS = { a: 'SET A', c: 'SET C', b: 'SET B', all: 'SEMUA' };
-
-    for (const k of ['a', 'c', 'b']) {
-      const lines = RAW[k].trim().split('\n');
-      for (const l of lines) {
-        if (!l.trim()) continue;
-        const [v, m, p] = l.split('|');
-        words.push({
-          v: v ? v.trim() : '',
-          m: m ? m.trim() : '',
-          p: p ? p.trim() : '',
-          k: k,
-          id: k + ':' + words.length
-        });
-      }
-    }
-
-    // Set nama label
-    const SETS = { all: 'Semua (' + words.length + ')' };
-    for (const k of ['a', 'c', 'b']) {
-      SETS[k] = NM[k] + ' (' + words.filter(w => w.k === k).length + ')';
-    }
-
-    // State LocalStorage untuk kartu yang sudah hafal
-    let known = new Set();
-    try {
-      const stored = localStorage.getItem('dv-known');
-      if (stored) {
-        known = new Set(JSON.parse(stored));
-      }
-    } catch (e) {
-      console.warn('LocalStorage tidak dapat diakses:', e);
-    }
-
-    // State Aplikasi
-    let currentSet = 'all';
-    let onlyUnk = false;
-    let deck = [];
     let currentIndex = 0;
-    let isFlipped = false;
-    let currentXP = 40;
 
-    // Simpan status hafal
-    function saveKnown() {
-      try {
-        localStorage.setItem('dv-known', JSON.stringify([...known]));
-      } catch (e) {}
+    // Memutar Kartu (Toggle Class)
+    function flipCard() {
+      const card = document.getElementById("flashcard");
+      card.classList.toggle("flipped");
     }
 
-    // Elemen DOM
-    const cardFlipper = document.getElementById('flashcard-flipper');
-    const navFlipBtn = document.getElementById('nav-flip-btn');
-    const navNextBtn = document.getElementById('nav-next-btn');
-    const navPrevBtn = document.getElementById('nav-prev-btn');
-    const markOkBtn = document.getElementById('mark-ok-btn');
-    const markNoBtn = document.getElementById('mark-no-btn');
-    const shufBtn = document.getElementById('shuf-btn');
-    const unkBtn = document.getElementById('unk-btn');
-    const rstBtn = document.getElementById('rst-btn');
-    const cardAudioPill = document.getElementById('card-audio-pill');
-    const backFlipBtn = document.getElementById('back-flip-btn');
-    const toastElement = document.getElementById('toast-feedback');
-    const toastText = document.getElementById('toast-text');
-    const progressBarFill = document.getElementById('progress-bar-fill');
-    const cardCounterLabel = document.getElementById('card-counter-label');
-    const statHafal = document.getElementById('stat-hafal');
-    const moduleTag = document.getElementById('module-tag');
-
-    // Elemen Kartu Depan & Belakang
-    const cardFrontSetName = document.getElementById('card-front-set-name');
-    const cardFrontVerb = document.getElementById('card-front-verb');
-    const cardFrontPhonetic = document.getElementById('card-front-phonetic');
-    const cardStatusBadge = document.getElementById('card-status-badge');
-    const cardBackSetName = document.getElementById('card-back-set-name');
-    const cardBackMeaning = document.getElementById('card-back-meaning');
-    const cardBackVerbEcho = document.getElementById('card-back-verb-echo');
-    const cardBackPhoneticEcho = document.getElementById('card-back-phonetic-echo');
-    const totalMasteryPercent = document.getElementById('total-mastery-percent');
-
-    // Audio SFX Synthesizer (Web Audio API)
-    let audioCtx = null;
-    function playAudioTone(freq, type, duration) {
-      try {
-        if (!audioCtx) {
-          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        }
-        if (audioCtx.state === 'suspended') {
-          audioCtx.resume();
-        }
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = type || 'sine';
-        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-        gain.gain.setValueAtTime(0.035, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + duration);
-      } catch (err) {}
-    }
-
-    // Notifikasi Toast
-    let toastTimeout;
-    function showToast(message, iconClass = "fa-solid fa-circle-check text-tertiary") {
-      clearTimeout(toastTimeout);
-      toastText.textContent = message;
-      const icon = toastElement.querySelector('i');
-      icon.className = iconClass;
-      toastElement.classList.remove('opacity-0', 'pointer-events-none', '-translate-y-2');
-      toastElement.classList.add('opacity-100', 'translate-y-0');
-      toastTimeout = setTimeout(() => {
-        toastElement.classList.add('opacity-0', 'pointer-events-none', '-translate-y-2');
-        toastElement.classList.remove('opacity-100', 'translate-y-0');
-      }, 1600);
-    }
-
-    // TTS Pelafalan Bahasa Inggris (en-US)
-    function speakVerb(text) {
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        const u = new SpeechSynthesisUtterance(text);
-        u.lang = 'en-US';
-        u.rate = 0.9;
-        window.speechSynthesis.speak(u);
-        showToast(`Pronunciation: "${text}"`, "fa-solid fa-volume-high text-primary");
-      } else {
-        showToast("Web Speech API tidak didukung di browser ini", "fa-solid fa-circle-exclamation text-glow-amber");
-      }
-    }
-
-    // Bangun Ulang Deck Berdasarkan Filter Set & Status Hafal
-    function buildDeck() {
-      deck = words.filter(w => 
-        (currentSet === 'all' || w.k === currentSet) && 
-        (!onlyUnk || !known.has(w.id))
-      );
-      currentIndex = 0;
-      isFlipped = false;
-      cardFlipper.classList.remove('flipped');
-      renderCard();
-    }
-
-    // Render Tampilan Kartu
-    function renderCard() {
-      const pool = words.filter(w => currentSet === 'all' || w.k === currentSet);
-      const knCount = pool.filter(w => known.has(w.id)).length;
+    // Memperbarui Tampilan Kartu & Indikator
+    function updateCard() {
+      const card = document.getElementById("flashcard");
       
-      // Update Statistik Hafal di Header
-      statHafal.innerHTML = `<i class="fa-solid fa-circle-check text-xs"></i><span>Hafal ${knCount}/${pool.length}</span>`;
-      moduleTag.textContent = SET_TAGS[currentSet] || 'DAILY VERBS';
+      // Kembalikan ke posisi depan dulu jika sedang terbuka di belakang
+      card.classList.remove("flipped");
 
-      // Update Mastery di micro card bawah
-      const totalPct = pool.length ? Math.round((knCount / pool.length) * 100) : 0;
-      totalMasteryPercent.textContent = `${totalPct}%`;
+      setTimeout(() => {
+        const item = flashcards[currentIndex];
+        document.getElementById("cardQuestion").innerText = item.question;
+        document.getElementById("cardAnswer").innerText = item.answer;
 
-      // Jika tidak ada kartu (misal semua sudah hafal pada mode filter)
-      if (!deck.length) {
-        cardCounterLabel.textContent = `0 dari 0`;
-        progressBarFill.style.width = `100%`;
-        cardFrontVerb.textContent = 'Selesai!';
-        cardFrontPhonetic.textContent = '🎉 Semua Terhafal';
-        cardFrontSetName.textContent = 'Selesai';
-        cardStatusBadge.innerHTML = `<span class="text-tertiary">100% Hafal</span>`;
-        cardBackMeaning.textContent = 'Selamat! Semua kartu di set ini sudah Anda kuasai.';
-        cardBackVerbEcho.textContent = '';
-        cardBackPhoneticEcho.textContent = '';
-        return;
-      }
+        // Update Counter
+        document.getElementById("cardCounter").innerText = `${currentIndex + 1} / ${flashcards.length}`;
 
-      if (currentIndex >= deck.length) currentIndex = 0;
-      const w = deck[currentIndex];
-      const isKnown = known.has(w.id);
-
-      // Kartu Depan
-      cardFrontVerb.textContent = w.v;
-      cardFrontPhonetic.textContent = w.p;
-      cardFrontSetName.textContent = NM[w.k] || 'Daily Verbs';
-      
-      if (isKnown) {
-        cardStatusBadge.className = "px-2.5 py-0.5 rounded-full bg-tertiary/20 border border-tertiary/40 text-tertiary text-[10px] font-bold uppercase tracking-wider flex items-center gap-1";
-        cardStatusBadge.innerHTML = `<i class="fa-solid fa-check text-[9px]"></i><span>Hafal</span>`;
-      } else {
-        cardStatusBadge.className = "px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-on-surface-variant text-[10px] font-bold uppercase tracking-wider flex items-center gap-1";
-        cardStatusBadge.innerHTML = `<span>Belum</span>`;
-      }
-
-      // Kartu Belakang
-      cardBackSetName.textContent = NM[w.k] || 'Daily Verbs';
-      cardBackMeaning.textContent = w.m;
-      cardBackVerbEcho.textContent = w.v;
-      cardBackPhoneticEcho.textContent = w.p;
-
-      // Update Counter & Progress Bar
-      cardCounterLabel.textContent = `${currentIndex + 1} dari ${deck.length}`;
-      const percentage = ((currentIndex + 1) / deck.length) * 100;
-      progressBarFill.style.width = `${percentage}%`;
+        // Update Progress Bar
+        const progressPercent = ((currentIndex + 1) / flashcards.length) * 100;
+        document.getElementById("progressBar").style.width = `${progressPercent}%`;
+      }, 150);
     }
 
-    // Logika 3D Flip
-    function flipCard(forceState = null) {
-      if (!deck.length) return;
-      if (forceState !== null) {
-        isFlipped = forceState;
-      } else {
-        isFlipped = !isFlipped;
-      }
-
-      if (isFlipped) {
-        cardFlipper.classList.add('flipped');
-        playAudioTone(440, 'triangle', 0.14);
-      } else {
-        cardFlipper.classList.remove('flipped');
-        playAudioTone(330, 'sine', 0.12);
-      }
+    // Navigasi Lanjut
+    function nextCard() {
+      currentIndex = (currentIndex + 1) % flashcards.length;
+      updateCard();
     }
 
-    // Berpindah Kartu
-    function go(delta) {
-      if (!deck.length) return;
-      flipCard(false);
-      currentIndex = (currentIndex + delta + deck.length) % deck.length;
-      renderCard();
-      playAudioTone(480, 'sine', 0.08);
+    // Navigasi Kembali
+    function prevCard() {
+      currentIndex = (currentIndex - 1 + flashcards.length) % flashcards.length;
+      updateCard();
     }
 
-    // Tandai Kartu sebagai "Hafal ✓"
-    function markKnown() {
-      if (!deck.length) return;
-      const w = deck[currentIndex];
-      known.add(w.id);
-      saveKnown();
-
-      currentXP += 10;
-      document.getElementById('xp-counter-badge').textContent = `+${currentXP} XP`;
-      showToast(`"${w.v}" ditandai Hafal ✓`, "fa-solid fa-circle-check text-tertiary");
-      playAudioTone(660, 'triangle', 0.15);
-
-      if (onlyUnk) {
-        deck.splice(currentIndex, 1);
-        if (currentIndex >= deck.length) currentIndex = 0;
-        flipCard(false);
-        renderCard();
-      } else {
-        go(1);
-      }
-    }
-
-    // Tandai Kartu sebagai "Belum Hafal"
-    function markUnknown() {
-      if (!deck.length) return;
-      const w = deck[currentIndex];
-      known.delete(w.id);
-      saveKnown();
-
-      showToast(`"${w.v}" disimpan untuk diulang`, "fa-solid fa-rotate-left text-glow-rose");
-      playAudioTone(320, 'sine', 0.12);
-      go(1);
-    }
-
-    // Acak Kartu (Fisher-Yates Shuffle)
-    function shuffleDeck() {
-      if (deck.length <= 1) return;
-      for (let j = deck.length - 1; j > 0; j--) {
-        const r = Math.floor(Math.random() * (j + 1));
-        [deck[j], deck[r]] = [deck[r], deck[j]];
-      }
-      currentIndex = 0;
-      flipCard(false);
-      renderCard();
-      showToast("Urutan kartu berhasil diacak 🔀", "fa-solid fa-shuffle text-secondary");
-      playAudioTone(580, 'triangle', 0.15);
-    }
-
-    // ==========================================
-    // RENDER TOMBOL FILTER SETS (Hal 10-14, dll)
-    // ==========================================
-    const setsContainer = document.getElementById('set-tabs-container');
-    for (const k in SETS) {
-      const btn = document.createElement('button');
-      btn.className = `px-3.5 py-1.5 rounded-full text-[12px] font-semibold whitespace-nowrap transition-all border ${
-        k === currentSet 
-          ? 'bg-gradient-to-r from-primary-container to-secondary text-surface-midnight border-transparent shadow-[0_2px_12px_rgba(128,131,255,0.4)] font-bold' 
-          : 'bg-surface-container/80 text-on-surface-variant hover:text-on-surface border-white/5 hover:bg-surface-variant'
-      }`;
-      btn.textContent = SETS[k];
-      btn.onclick = () => {
-        currentSet = k;
-        [...setsContainer.children].forEach(c => {
-          c.className = 'px-3.5 py-1.5 rounded-full text-[12px] font-semibold whitespace-nowrap transition-all border bg-surface-container/80 text-on-surface-variant hover:text-on-surface border-white/5 hover:bg-surface-variant';
-        });
-        btn.className = 'px-3.5 py-1.5 rounded-full text-[12px] font-semibold whitespace-nowrap transition-all border bg-gradient-to-r from-primary-container to-secondary text-surface-midnight border-transparent shadow-[0_2px_12px_rgba(128,131,255,0.4)] font-bold';
-        buildDeck();
-      };
-      setsContainer.appendChild(btn);
-    }
-
-    // ==========================================
-    // EVENT LISTENERS
-    // ==========================================
-    cardFlipper.addEventListener('click', () => flipCard());
-    navFlipBtn.addEventListener('click', (e) => { e.stopPropagation(); flipCard(); });
-    backFlipBtn.addEventListener('click', (e) => { e.stopPropagation(); flipCard(false); });
-
-    navNextBtn.addEventListener('click', (e) => { e.stopPropagation(); go(1); });
-    navPrevBtn.addEventListener('click', (e) => { e.stopPropagation(); go(-1); });
-
-    markOkBtn.addEventListener('click', (e) => { e.stopPropagation(); markKnown(); });
-    markNoBtn.addEventListener('click', (e) => { e.stopPropagation(); markUnknown(); });
-
-    shufBtn.addEventListener('click', (e) => { e.stopPropagation(); shuffleDeck(); });
-
-    unkBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      onlyUnk = !onlyUnk;
-      if (onlyUnk) {
-        unkBtn.classList.remove('bg-surface-container', 'text-on-surface');
-        unkBtn.classList.add('bg-secondary/20', 'text-secondary', 'border-secondary/30');
-        showToast("Filter aktif: Hanya kartu belum hafal", "fa-solid fa-filter text-secondary");
-      } else {
-        unkBtn.classList.remove('bg-secondary/20', 'text-secondary', 'border-secondary/30');
-        unkBtn.classList.add('bg-surface-container', 'text-on-surface');
-        showToast("Menampilkan semua kartu di set ini", "fa-solid fa-list-check text-on-surface-variant");
-      }
-      buildDeck();
-    });
-
-    rstBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (confirm('Yakin ingin mereset seluruh progres hafalan yang sudah tersimpan?')) {
-        known = new Set();
-        saveKnown();
-        onlyUnk = false;
-        unkBtn.classList.remove('bg-secondary/20', 'text-secondary', 'border-secondary/30');
-        unkBtn.classList.add('bg-surface-container', 'text-on-surface');
-        buildDeck();
-        showToast("Seluruh status hafalan di-reset", "fa-solid fa-rotate-left text-glow-amber");
-      }
-    });
-
-    cardAudioPill.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (deck.length && deck[currentIndex]) {
-        speakVerb(deck[currentIndex].v);
-      }
-    });
-
-    // Keyboard Shortcuts
-    window.addEventListener('keydown', (e) => {
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-
-      if (e.code === 'Space' || e.code === 'Enter') {
-        e.preventDefault();
-        flipCard();
-      } else if (e.code === 'ArrowRight' || e.key.toLowerCase() === 'n') {
-        e.preventDefault();
-        go(1);
-      } else if (e.code === 'ArrowLeft' || e.key.toLowerCase() === 'p') {
-        e.preventDefault();
-        go(-1);
-      } else if (e.key.toLowerCase() === 's') {
-        e.preventDefault();
-        shuffleDeck();
-      } else if (e.key.toLowerCase() === 'h' || e.key === '1') {
-        e.preventDefault();
-        markKnown();
-      } else if (e.key.toLowerCase() === 'b' || e.key === '2') {
-        e.preventDefault();
-        markUnknown();
-      } else if (e.key.toLowerCase() === 'v') {
-        e.preventDefault();
-        if (deck.length && deck[currentIndex]) speakVerb(deck[currentIndex].v);
-      }
-    });
-
-    // Inisialisasi awal
-    buildDeck();
+    // Inisialisasi awal saat halaman dimuat
+    updateCard();
   </script>
 </body>
 </html>
